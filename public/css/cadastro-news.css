@@ -1,0 +1,145 @@
+/* CHANGES ON BUTTONS */
+section.header > .rightItems > button{
+    padding: 7px 20px;
+    border: 1px solid black;
+    align-items: center;
+    display: flex;
+    font-weight: 900;
+    border-radius: 5px;
+    background-color: var(--search-btn-color);
+    color: var(--navbar-char-color);
+    cursor: pointer;
+    transition: 0.1s ease-in;
+}
+section.header > .rightItems > button > i{
+    margin-right: 15px;
+    padding-right: 15px;
+    height: 25px;
+    align-items: center;
+    display: flex;
+    border-right: 1px solid rgb(255, 255, 255);
+}
+
+section.header > .rightItems > button:hover{
+    background-color: var(--search-btn-hover-color);
+    transition: 0.1s ease-in;
+}
+section.header > .rightItems > button:active{
+    background-color: var(--search-btn-active-color);
+    transition: 0.1s ease-in;
+}
+
+/* -------------------------------------------------------------------------------------- */
+
+/* Page */
+section.cadPage{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    width: 100%;
+    height: calc(100vh - 50px);
+}
+
+section.cadPage > .form {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 350px;
+    height: 540px;
+    padding: 20px 40px;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 5px;
+    background-color: var(--navbar-char-color);
+}
+
+section.cadPage > .form > h1{
+    text-align: center;
+    margin: 0px 0px 20px 0px;
+}
+
+section.cadPage > .form > form{
+    display: flex;
+    flex-direction: column;
+}
+
+section.cadPage > .form > form input[type="text"]{
+    height: 35px;
+    margin-bottom: 20px;
+    padding-left: 15px;
+    font-size: 17px;
+    transition: 0.1s ease-in;
+}
+
+section.cadPage > .form > form input[type="text"]:focus + label{
+    margin-left: 25px;
+    transition: 0.1s ease-in;
+    color: var(--placeholder-focused-color);
+}
+section.cadPage > .form > form input[type="text"]:valid + label.Title,
+section.cadPage > .form > form input[type="text"]:valid + label.subTitle
+{
+    display: none;
+}
+
+section.cadPage > .form > form label.Title,
+section.cadPage > .form > form label.subTitle{
+    position: absolute;
+    margin-left: 15px;
+    color: var(--placeholder-color);
+    cursor: text;
+    transition: 0.1s ease-in;
+}
+section.cadPage > .form > form label.Title{
+    margin-top: 7px;
+}
+section.cadPage > .form > form label.subTitle{
+    margin-top: 63px;
+}
+
+section.cadPage > .form > form label.Title::after,
+section.cadPage > .form > form label.subTitle::after{
+    content: ' *';
+    color: var(--search-btn-color);
+}
+
+section.cadPage > .form > form textarea{
+    resize: none;
+    width: 100%;
+    height: 180px;
+    padding: 5px 0px 5px 5px;
+    margin-bottom: 20px;
+    font-size: 15px;
+}
+
+section.cadPage > .form > form button{
+    padding: 15px 20%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 900;
+    background-color: var(--register-btn-color);
+    color: var(--navbar-char-color);
+    cursor: pointer;
+    transition: 0.1s ease-in;
+}
+section.cadPage > .form > form button > i{
+    margin-right: 15px;
+    padding-right: 50px;
+    height: 25px;
+    align-items: center;
+    display: flex;
+    border-right: 1px solid rgb(255, 255, 255);
+}
+
+section.cadPage > .form > form > span{
+    text-align: center;
+    color: var(--search-btn-color);
+    margin-bottom: 20px;
+}

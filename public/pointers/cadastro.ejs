@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TecNews - Cadastro</title>
+    <link rel="stylesheet" href="/index.css">
+    <link rel="stylesheet" href="/cadastro.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <!-- NavBar -->
+    <section class="header">
+        <div class="links">
+            <a href="/">Home</a>
+        </div>
+
+        <div class="rightItems">
+            <% if(result == 0) { %>
+            <button onclick="loginMenu();" id="loginBtn"><i class="fa fa-lock" id="loginBtn"></i> LOGIN</button>
+            <% } else { %>
+            <button onclick="loginMenu();" id="loginBtn"><i class="fa fa-lock" id="loginBtn"></i> LOGADO!</button>
+            <% } %>
+        </div>
+
+        <!-- Login window -->
+        <div id="login-wind" class="dd-content arrow-up" id="inside">
+            <h1 id="inside">Login</h1>
+
+            <form action="/doLogin" method="post" name="loginForm" id="loginForm">
+                <input type="text" name="login" id="login" required/>
+                <label for="login" class="login" id="inside">Usuário</label>
+                <input type="password" name="senha" id="senha" required/>
+                <label for="senha" class="senha" id="inside">Senha</label>
+            </form>
+            
+            <button type="submit" value="Entrar" form="loginForm" id="inside"><i class="fa fa-unlock" id="inside"></i> Entrar</button>
+            <button onclick="window.location.href='/register'" class="register" id="inside"><i class="fa fa-newspaper" id="inside"></i> Cadastrar-se</button>
+        </div>
+    </section>
+
+    <!-- Formulario -->
+    <section class="page">
+        <!-- <div class="advices">
+
+        </div> -->
+
+        <div class="form" onload="document.getElementById('termos').required = true;">
+            <h1>Cadastro</h1>
+
+            <form action="/regUser" method="post" name="regForm" id="regForm">
+                <input type="text" name="usuario" id="usuario" onclick="UserAdvice();" required />
+                <label for="usuario" class="user">Usuário</label>
+                <input type="password" name="senhaa" id="senhaa" onclick="PassAdvice();" required/>
+                <label for="senhaa" class="pass">Senha</label>
+                <input type="password" name="confirm" id="confirm" required />
+                <label for="confirm" id="confSenha" class="cpass">Confirmar Senha</label>
+                
+                <div class="checkbox">
+                    <div class="box"><input type="checkbox" name="termos" id="termos" required ></div>
+                    <label for="termos">Ao clicar, você aceita os <a href="#">termos de uso</a> da plataforma! *</span>
+                </div>
+
+                <span>Campos com * são obrigatórios!</span>
+                <button type="submit"><i class="fa fa-unlock"></i> Cadastrar</button>
+            </form>
+
+            <!-- Password advice -->
+            <div id="passADV-wind" class="password-info" id="inside">
+                <p>Sua senha deve conter, no mínimo, 6 caracteres entre: letras maiúsculas, minusculas,
+                     numeros e simbolos!</p>
+            </div>
+
+            <!-- User advice -->
+            <div id="userADV-wind" class="user-info" id="inside">
+                <p>Seu nome de usuário deve conter, no mínimo, 6 caracteres!</p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- JS -->
+    <script src="/dropMenus.js"></script>
+    <script src="/verificarSenhas.js"></script>
+</body>
+</html>

@@ -1,0 +1,273 @@
+
+/* CHANGES ON BUTTONS */
+section.header > .rightItems > button{
+    padding: 7px 20px;
+    border: 1px solid black;
+    align-items: center;
+    display: flex;
+    font-weight: 900;
+    border-radius: 5px;
+    background-color: var(--search-btn-color);
+    color: var(--navbar-char-color);
+    cursor: pointer;
+    transition: 0.1s ease-in;
+}
+section.header > .rightItems > button > i{
+    margin-right: 15px;
+    padding-right: 15px;
+    height: 25px;
+    align-items: center;
+    display: flex;
+    border-right: 1px solid rgb(255, 255, 255);
+}
+
+section.header > .rightItems > button:hover{
+    background-color: var(--search-btn-hover-color);
+    transition: 0.1s ease-in;
+}
+section.header > .rightItems > button:active{
+    background-color: var(--search-btn-active-color);
+    transition: 0.1s ease-in;
+}
+/* ------------------------------------------------------------------------------------------- */
+
+/* FORM */
+section.page {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    width: 100%;
+    height: calc(100vh - 50px);
+}
+
+section.page > .mobileAdvices{
+    display: none;
+}
+
+section.page > .form {
+    width: 350px;
+    height: 480px;
+    padding: 20px 40px;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 5px;
+    background-color: var(--navbar-char-color);
+}
+section.page > .form > h1{
+    text-align: center;
+    margin: 20px 0px 30px 0px;
+}
+
+section.page > .form > form{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+}
+
+section.page > .form > form > span{
+    text-align: center;
+    color: var(--search-btn-color);
+    margin-bottom: 20px;
+}
+
+section.page > .form > form input{
+    height: 40px;
+    margin-bottom: 20px;
+    padding-left: 15px;
+    font-size: 14px;
+    font-weight: 700;
+    transition: 0.1s ease-in;
+}
+
+section.page > .form > form input:focus + label{
+    margin-left: 25px;
+    transition: 0.1s ease-in;
+    color: var(--placeholder-focused-color);
+}
+section.page > .form > form input:valid + label.user,
+section.page > .form > form input:valid + label.pass
+{
+    display: none;
+}
+
+section.page > .form > form label.pass,
+section.page > .form > form label.user,
+section.page > .form > form label.cpass{
+    position: absolute;
+    margin-left: 15px;
+    color: var(--placeholder-color);
+    cursor: text;
+    transition: 0.1s ease-in;
+}
+
+section.page > .form > form label.pass::after,
+section.page > .form > form label.user::after,
+section.page > .form > form label.cpass::after,
+section.page > .form > form > .checkbox > input::after{
+    content: ' *';
+    color: var(--search-btn-color);
+}
+
+section.page > .form > form label.user{
+    margin-top: 9px;
+}
+section.page > .form > form label.pass{
+    margin-top: 70px;
+}
+section.page > .form > form label.cpass{
+    margin-top: 130px;
+}
+
+section.page > .form > form button{
+    padding: 15px 20%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 900;
+    background-color: var(--register-btn-color);
+    color: var(--navbar-char-color);
+    cursor: pointer;
+    transition: 0.1s ease-in;
+}
+section.page > .form > form button > i{
+    margin-right: 15px;
+    padding-right: 30px;
+    height: 25px;
+    align-items: center;
+    display: flex;
+    border-right: 1px solid rgb(255, 255, 255);
+}
+
+section.page > .form > form > .checkbox{
+    display: flex;
+    flex-wrap: nowrap;
+    margin-top: 10px;
+}
+section.page > .form > form > .checkbox > .box{
+    margin: 0px 13px;
+}
+section.page > .form > form > .checkbox > label{
+    width: 250px;
+}
+
+/* ---------------------------------------------------------------------------------- */
+
+/* Popup */
+.password-info{
+    display: none;
+    position: relative;
+    padding: 5px;
+    width: 300px;
+    min-height: 50px;
+    max-height: 130px;
+    right: -300px;
+    top: -285px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    background-color: var(--navbar-char-color); 
+    margin-left: 40px;
+    padding: 7px 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.user-info{
+    display: none;
+    position: relative;
+    padding: 5px;
+    width: 300px;
+    min-height: 50px;
+    max-height: 130px;
+    right: -300px;
+    top: -345px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    background-color: var(--navbar-char-color); 
+    margin-left: 40px;
+    padding: 7px 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.password-info:before,
+.user-info:before{
+    content: "";
+    position: absolute;
+    width: 0; 
+	height: 0; 
+	border-top: 15px solid transparent;
+	border-bottom: 15px solid transparent;
+	border-right:15px solid var(--navbar-char-color); 
+    top: 0;
+    left: -14px;
+}
+
+.showADV {
+    display: inline-block;
+    animation-name: showPopUp;
+    animation-duration: 0.09s;
+}
+
+@keyframes showPopUp {
+    0%   {opacity: 0;}
+    25%  {opacity: 0.25;}
+    50%  {opacity: 0.5;}
+    100% {opacity: 1;}
+}
+
+@media screen and (max-width: 768px) {
+    /* Popup */
+    .password-info{
+        display: none;
+        position: relative;
+        padding: 5px;
+        width: 290px;
+        min-height: 50px;
+        max-height: 130px;
+        border-radius: 5px;
+        background-color: var(--navbar-char-color); 
+        margin-left: -310px;
+        top: -550px;
+        padding: 7px 20px;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
+    .user-info{
+        display: none;
+        position: relative;
+        padding: 5px;
+        width: 290px;
+        min-height: 50px;
+        max-height: 130px;
+        border-radius: 5px;
+        background-color: var(--navbar-char-color); 
+        margin-left: -310px;
+        top: -510px;
+        padding: 7px 20px;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
+
+    .password-info:before,
+    .user-info:before{
+        content: "";
+        display: none;
+        position: absolute;
+        width: 0; 
+        height: 0; 
+        border-top: 15px solid transparent;
+        border-bottom: 15px solid transparent;
+        border-right:15px solid var(--navbar-char-color); 
+        top: 0;
+        left: -14px;
+    }
+
+    .showADV {
+        display: inline-flex;
+        animation-name: showPopUp;
+        animation-duration: 0.09s;
+    }
+}
