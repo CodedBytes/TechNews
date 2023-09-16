@@ -6,6 +6,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////////
 // Server Port
 const port = 2000;
+var erro = 0;// Pages Error code.
 
 // Frameworks e middlewares
 const express = require("express");
@@ -64,28 +65,28 @@ app.get("/",(req, res)=>{
     if(!req.session.loggedin)
     {
         // Lista as noticias disponiveis
-        conn.query("SELECT * FROM noticias ORDER BY Titulo",[],(error, results)=>{
+        conn.query("SELECT * FROM noticias ORDER BY Titulo;",[],(error, results)=>{
             if(error) throw error;
             if(results.length > 0)
             {
                 let data_brasileira = results[0].Data_Criacao.split('-').reverse().join('/');
-                res.render(path.join(__dirname + '/public/pointers/index.ejs'),{result: 0, login: req.session.login, news: results, notices: 1, data: data_brasileira});
+                res.render(path.join(__dirname + '/public/pointers/index.ejs'),{result: 0, login: req.session.login, news: results, notices: 1, data: data_brasileira, msg: erro});
             } else {
-                res.render(path.join(__dirname + '/public/pointers/index.ejs'),{result: 0, login: req.session.login, news: results, notices: 0});
+                res.render(path.join(__dirname + '/public/pointers/index.ejs'),{result: 0, login: req.session.login, news: results, notices: 0, msg: erro});
             }
         });
     }
     else if(req.session.loggedin)
     {
         // Lista as noticias disponiveis
-        conn.query("SELECT * FROM noticias ORDER BY Titulo",[],(error, results)=>{
+        conn.query("SELECT * FROM noticias ORDER BY Titulo;",[],(error, results)=>{
             if(error) throw error;
             if(results.length > 0)
             {
                 let data_brasileira = results[0].Data_Criacao.split('-').reverse().join('/');
-                res.render(path.join(__dirname + '/public/pointers/index.ejs'),{result: 1,login: req.session.login, news: results, notices: 1, data: data_brasileira});
+                res.render(path.join(__dirname + '/public/pointers/index.ejs'),{result: 1,login: req.session.login, news: results, notices: 1, data: data_brasileira,  msg: erro});
             } else {
-                res.render(path.join(__dirname + '/public/pointers/index.ejs'),{result: 1, login: req.session.login, news: results, notices: 0});
+                res.render(path.join(__dirname + '/public/pointers/index.ejs'),{result: 1, login: req.session.login, news: results, notices: 0, msg: erro});
             }
         });
     }
@@ -93,14 +94,14 @@ app.get("/",(req, res)=>{
 
 // Pagina de registro
 app.get("/register",(req, res)=>{
-    if(!req.session.loggedin) { res.render(path.join(__dirname + '/public/pointers/cadastro.ejs'),{result: 0}); }
+    if(!req.session.loggedin) { res.render(path.join(__dirname + '/public/pointers/cadastro.ejs'),{result: 0, msg: erro}); }
     else if(req.session.loggedin) { res.redirect("/"); }
 });
 
 // Pagina ed registro de noticias
 app.get("/create-news",(req, res)=>{
     if(!req.session.loggedin) { res.redirect("/"); }
-    else if(req.session.loggedin) { res.render(path.join(__dirname + '/public/pointers/news/cadNews.ejs'),{result: 1, login: req.session.login}); }
+    else if(req.session.loggedin) { res.render(path.join(__dirname + '/public/pointers/news/cadNews.ejs'),{result: 1, login: req.session.login, msg: erro}); }
 });
 
 // Logout
@@ -122,24 +123,25 @@ app.post("/doLogin",(req, res)=>{
     if((login.length >= 7 && senha.length >= 6) && (login.length <= 60 && senha.length <= 20))
     {    
         //Buscando na DB
-        conn.query("SELECT * FROM usuarios WHERE Usuario=?;",[login],(error, results)=>{
+        conn.query("SELECT * FROM usuarios WHERE Usuario=? Limit 1;",[login],async (error, results)=>{
             if(error) throw error;// Retorna erro.
             if(results.length > 0)
             {
                 // Crypt encripta a senha bruta, e compara a hash com o do banco.
-                if (crypt.compare(senha, results[0].Senha))
+                if (await crypt.compare(senha, results[0].Senha))
                 {
                     req.session.loggedin = true;
                     req.session.login = results[0].Usuario;
                     req.session.userID = results[0].user_ID;
                     res.redirect("/");
                 } else {
-                    // ativar div de msg
+                    erro = 3;
                     res.redirect("/");
                 } 
-            } else { res.redirect("/"); }
+            } else { erro = 2; res.redirect("/"); }
         });
-    } else { res.redirect("/"); }
+    } else { erro = 1; res.redirect("/");
+    console.log(erro);}
 });
 
 // Register
@@ -151,7 +153,7 @@ app.post("/regUser",(req, res)=>{
     if((login.length >= 6 && senha.length >= 6) && (login.length <= 60 && senha.length <= 20))
     {
         // Checa se já tem algum usuário cadastrado com o user passado.
-        conn.query("SELECT * FROM usuarios WHERE Usuario=?",[login],(error,results)=>{
+        conn.query("SELECT * FROM usuarios WHERE Usuario=?;",[login],async (error,results)=>{
             if(error) throw error;// Retorna erro.
             if(results.length > 0)
             {
@@ -159,14 +161,14 @@ app.post("/regUser",(req, res)=>{
                 res.redirect("/register");
             } else {
                 // Aplicando hash na senha e gravando no banco
-                crypt.hash(senha, 10, (error, hash)=>{
+                await crypt.hash(senha, 10, (error, hash)=>{
                     if(error) throw error;
 
                     // Query
                     conn.query("INSERT INTO usuarios (Usuario, Senha, Data) VALUES (?, ?, now());",[login, hash],(error,results)=>{
                         if(error) throw error;
                         if(results.affectedRows > 0) { res.redirect("/"); }
-                        else { res.redirect("/"); }
+                        else { ; res.redirect("/"); }
                     });
                 });
             }
@@ -236,7 +238,7 @@ app.get("/search", (req, res)=>{
     let pesquisa = req.query.noticia;
 
     // Encontra as notícias com base na pesquisa.
-    conn.query("SELECT * FROM noticias WHERE Titulo LIKE ? or subTitulo LIKE ? ORDER BY Titulo",["%" + pesquisa + "%", "%" + pesquisa + "%"],function(error,results,fields){
+    conn.query("SELECT * FROM noticias WHERE Titulo LIKE ? or subTitulo LIKE ? ORDER BY Titulo;",["%" + pesquisa + "%", "%" + pesquisa + "%"],function(error,results,fields){
         if(error) throw error;
         if(results.length > 0)
         {
@@ -262,9 +264,9 @@ app.get("/editNews",(req, res)=>{
         console.log(id);
 
         // Query do processo.
-        conn.query("SELECT * FROM noticias WHERE notice_ID = ? and Autor = ?",[id, req.session.login],(error,results)=>{
+        conn.query("SELECT * FROM noticias WHERE notice_ID = ? and Autor = ?;",[id, req.session.login],(error,results)=>{
             if(error) throw error;// Joga erro na tela.
-            if(results.length > 0){ res.render(path.join(__dirname + '/public/pointers/news/editNews.ejs'),{result: 1, login: req.session.login});  } 
+            if(results.length > 0){ res.render(path.join(__dirname + '/public/pointers/news/editNews.ejs'),{result: 1, login: req.session.login, news: results});  } 
             else { res.redirect("/"); }
         });
     } else { res.redirect("/"); }
@@ -279,7 +281,7 @@ app.post("/delNews",(req, res)=>{
         console.log(id);
 
         // Query do processo.
-        conn.query("DELETE FROM noticias WHERE notice_ID = ?",[id],(error,results)=>{
+        conn.query("DELETE FROM noticias WHERE notice_ID = ?;",[id],(error,results)=>{
             if(error) throw error;// Joga erro na tela.
             if(results.affectedRows > 0){ res.redirect("/"); } else { res.redirect("/"); }
         });

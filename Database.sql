@@ -23,7 +23,7 @@ USE `news` ;
 CREATE TABLE IF NOT EXISTS `news`.`usuarios` (
   `user_ID` INT NOT NULL AUTO_INCREMENT,
   `Usuario` VARCHAR(45) NOT NULL,
-  `Senha` VARCHAR(45) NOT NULL,
+  `Senha` VARCHAR(300) NOT NULL,
   `Data` DATETIME NOT NULL,
   `Nivel` INT NOT NULL DEFAULT 0,
   PRIMARY KEY (`user_ID`))
