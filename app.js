@@ -6,7 +6,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////////
 // Server Port
 const port = 2000;
-var erro = 0;// Pages Error code.
+var erro = "";// Mensagem de erro.
 
 // Frameworks e middlewares
 const express = require("express");
@@ -71,8 +71,10 @@ app.get("/",(req, res)=>{
             {
                 let data_brasileira = results[0].Data_Criacao.split('-').reverse().join('/');
                 res.render(path.join(__dirname + '/public/pointers/index.ejs'),{result: 0, login: req.session.login, news: results, notices: 1, data: data_brasileira, msg: erro});
+                erro = "";// Mensagem de erro.
             } else {
                 res.render(path.join(__dirname + '/public/pointers/index.ejs'),{result: 0, login: req.session.login, news: results, notices: 0, msg: erro});
+                erro = "";// Mensagem de erro.
             }
         });
     }
@@ -85,8 +87,10 @@ app.get("/",(req, res)=>{
             {
                 let data_brasileira = results[0].Data_Criacao.split('-').reverse().join('/');
                 res.render(path.join(__dirname + '/public/pointers/index.ejs'),{result: 1,login: req.session.login, news: results, notices: 1, data: data_brasileira,  msg: erro});
+                erro = "";// Mensagem de erro.
             } else {
                 res.render(path.join(__dirname + '/public/pointers/index.ejs'),{result: 1, login: req.session.login, news: results, notices: 0, msg: erro});
+                erro = "";// Mensagem de erro.
             }
         });
     }
@@ -135,13 +139,12 @@ app.post("/doLogin",(req, res)=>{
                     req.session.userID = results[0].user_ID;
                     res.redirect("/");
                 } else {
-                    erro = 3;
+                    erro = "A senha não correspondente com a cadastrada.";
                     res.redirect("/");
                 } 
-            } else { erro = 2; res.redirect("/"); }
+            } else { erro = "Não foi encontrado nenhum usuário com este nome."; res.redirect("/"); }
         });
-    } else { erro = 1; res.redirect("/");
-    console.log(erro);}
+    } else { erro = "Os dados passados são muito curtos ou grandes demais."; res.redirect("/"); }
 });
 
 // Register
@@ -157,7 +160,7 @@ app.post("/regUser",(req, res)=>{
             if(error) throw error;// Retorna erro.
             if(results.length > 0)
             {
-                // Fazer aparecer a div de aviso.
+                erro = "Já existe um usuario com este nome cadastrado.";
                 res.redirect("/register");
             } else {
                 // Aplicando hash na senha e gravando no banco
@@ -168,7 +171,7 @@ app.post("/regUser",(req, res)=>{
                     conn.query("INSERT INTO usuarios (Usuario, Senha, Data) VALUES (?, ?, now());",[login, hash],(error,results)=>{
                         if(error) throw error;
                         if(results.affectedRows > 0) { res.redirect("/"); }
-                        else { ; res.redirect("/"); }
+                        else { erro = "Não foi possivel fazer o cadastro, entre em contato com o suporte."; res.redirect("/"); }
                     });
                 });
             }
@@ -189,7 +192,7 @@ app.post("/regNews", upload.single('image'),(req, res)=>{
             if(error) throw error;
             if(results.length > 0)
             {
-                // mandar codigo de erro ou faz aparecer div.
+                erro = "Já existe uma noícia com este mesmo nome cadastrado.";
                 res.redirect("/create-news");
             } else {
                 // Prossegue no cadastro da notícia.
@@ -207,8 +210,8 @@ app.post("/regNews", upload.single('image'),(req, res)=>{
                                     res.redirect("/");
                                     console.log("Imagem zerada, usando imagem padrão...");
                                 } else {
-                                    // Retorna div de aviso de erro.
-                                    res.redirect("/create-news");
+                                    erro = "Houve um problema interno com o sistema de fotos então usaremos a padrão. Entre em contate o suporte.";
+                                    res.redirect("/");
                                 }
                             });
                         } else {
@@ -220,8 +223,8 @@ app.post("/regNews", upload.single('image'),(req, res)=>{
                                     res.redirect("/");
                                     console.log("Upload realizado.");
                                 } else {
-                                    // Retorna div de aviso de erro.
-                                    res.redirect("/create-news");
+                                    erro = "Houve um problema interno com o sistema de fotos então usaremos a padrão. Entre em contate o suporte.";
+                                    res.redirect("/");
                                 }
                             });
                         }
@@ -246,13 +249,15 @@ app.get("/search", (req, res)=>{
             {
                 let data_brasileira = results[0].Data_Criacao.split('-').reverse().join('/');
                 res.render(path.join(__dirname + '/public/pointers/index.ejs'),{result: 0, login: req.session.login, news: results, notices: 1, data: data_brasileira});
+                erro = "";// limpa os erros.
             }
             else if(req.session.loggedin)
             {
                 let data_brasileira = results[0].Data_Criacao.split('-').reverse().join('/');
                 res.render(path.join(__dirname + '/public/pointers/index.ejs'),{result: 0, login: req.session.login, news: results, notices: 1, data: data_brasileira});
+                erro = "";// limpa os erros.
             }
-        } else { res.render(path.join(__dirname + '/public/pointers/index.ejs'),{result: 1, login: req.session.login, news: results, notices: 0}); }
+        } else { res.render(path.join(__dirname + '/public/pointers/index.ejs'),{result: 1, login: req.session.login, news: results, notices: 0}); erro = "";}
     });
 });
 
@@ -266,10 +271,60 @@ app.get("/editNews",(req, res)=>{
         // Query do processo.
         conn.query("SELECT * FROM noticias WHERE notice_ID = ? and Autor = ?;",[id, req.session.login],(error,results)=>{
             if(error) throw error;// Joga erro na tela.
-            if(results.length > 0){ res.render(path.join(__dirname + '/public/pointers/news/editNews.ejs'),{result: 1, login: req.session.login, news: results});  } 
+            if(results.length > 0){ res.render(path.join(__dirname + '/public/pointers/news/editNews.ejs'),{result: 1, login: req.session.login, news: results, msg: erro});  } 
             else { res.redirect("/"); }
         });
     } else { res.redirect("/"); }
+});
+
+// Registrando nova notícia
+app.post("/updateNews", upload.single('image'),(req, res)=>{
+    //Pegando campos
+    let title = req.body.title, subTitle = req.body.subtitle, content = req.body.content;
+    
+
+    // verificando se os campos realmente estão preenchidos
+    if(title.length > 0 && subTitle.length > 0 && content.length > 0)
+    {
+        console.log(title);
+        // Prossegue na atualização da notícia.
+        conn.query("UPDATE noticias SET Titulo = ?, subTitulo = ?, Texto = ? WHERE Autor = ?;",[title, subTitle, content, req.session.login],(error,results)=>{
+            if(error) throw error;
+            if(results.affectedRows > 0)
+            {
+                console.log(title);
+                // Faz o processo de gravação da foto na noticia.
+                if (!req.file)
+                {
+                    console.log(title);
+                    conn.query("UPDATE noticias SET Foto=? WHERE Autor=?;", ['', req.session.login],(error, results)=>{
+                        if (error) throw error;
+                        if(results.affectedRows > 0)
+                        {
+                            res.redirect("/");
+                            console.log("Imagem zerada, usando imagem padrão...");
+                        } else {
+                            erro = "Houve um problema interno com o sistema de fotos então usaremos a padrão. Entre em contate o suporte.";
+                            res.redirect("/");
+                        }
+                    });
+                } else {
+                    var imgsrc = '/photos/' + req.file.filename;
+                    conn.query("UPDATE noticias SET Foto=? WHERE Autor=?;", [imgsrc, req.session.login],(error, results)=>{
+                        if (error) throw error;
+                        if(results.affectedRows > 0)
+                        {
+                            res.redirect("/");
+                            console.log("Upload realizado.");
+                        } else {
+                            erro = "Houve um problema interno com o sistema de fotos então usaremos a padrão. Entre em contate o suporte.";
+                            res.redirect("/");
+                        }
+                    });
+                }
+            } else { throw error; }
+        });
+    }
 });
 
 // Deletando post
@@ -283,7 +338,7 @@ app.post("/delNews",(req, res)=>{
         // Query do processo.
         conn.query("DELETE FROM noticias WHERE notice_ID = ?;",[id],(error,results)=>{
             if(error) throw error;// Joga erro na tela.
-            if(results.affectedRows > 0){ res.redirect("/"); } else { res.redirect("/"); }
+            if(results.affectedRows > 0){ res.redirect("/"); } else { erro = "Houve um problema ao deletar sua notícia, entre em contato com o suporte."; res.redirect("/"); }
         });
     } else { res.redirect("/"); }
 });
