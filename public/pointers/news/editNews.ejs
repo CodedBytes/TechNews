@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechNews - Editando notícia</title>
+    <link rel="stylesheet" href="/index.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <!-- NavBar -->
+    <section class="header">
+        <div class="links">
+            <a href="/">Home</a>
+        </div>
+
+        <div class="rightItems">
+            <div class="search">
+                <form action="/search" method="get" name="searchForm" id="searchForm">
+                    <input type="text" name="noticia" id="noticia" required />
+                    <label for="noticia">Pesquisar Notícia</label>
+                </form>
+    
+                <button type="submit" form="searchForm"><i class="fa fa-search fa-2x"></i></button>
+            </div>
+            
+            <% if(result == 0) { %>
+            <button onclick="loginMenu();" id="loginBtn"><i class="fa fa-lock" id="loginBtn"></i> LOGIN</button>
+            <% } else { %>
+            <button onclick="PerfilMenu();" id="perfilBtn"><i class="fa fa-lock" id="perfilBtn"></i> PERFIL</button>
+            <% } %>
+        </div>
+
+        <!-- Perfil window -->
+        <% if(result == 1) { %>
+            <div id="perfil-wind" class="perfil-info arrow-up" id="inside">
+                <span>Olá <%= login %></span>
+                <hr>
+                <a href="/create-news">Nova Notícia</a>
+                <hr>
+                <button onclick="window.location.href='/logout'" class="register" id="inside"><i class="fa fa-door-open" id="inside"></i> Sair</button>
+            </div>
+        <% } %>
+    </section>
+
+    <!-- JS -->
+    <script src="/dropMenus.js"></script>
+</body>
+</html>
