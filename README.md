@@ -21,14 +21,14 @@ Projeto contem :
 - Sistema de cadastro usando middleware bcrypt.
 - Servidor em Node.js com framework Express.JS.
 - Sistema de pesquisa por notícias.
+- Sistema para deletar notícia feita pelo próprio usuario logado.
+- Sistema de hierarquía no login (Usuario, ADM, Mod, etc...). [INICIADO!]
 
 ##
 
 TODO List:
-- Sistema para deletar notícia feita pelo próprio usuario logado.
 - Sistema para editar notícia feita pelo próprio usuario logado.
 - Pagina para mostrar notícia completa, com possiveis espaços para ADS.
-- Sistema de hierarquía no login (Usuario, ADM, Mod, etc...).
 
 ##
  
