@@ -7,7 +7,7 @@
 
 ##
 
-Projeto idependente, front-end e brack-end, criando um sistema de ciação e catalogação de noticias.<br>
+Projeto idependente, front-end e brack-end, criando um sistema de criação e catalogação de noticias.<br>
 Projeto tem fins de mostrar meu conhecimento em front-end e back-end, como tambem em manipulação em bancos de dados MySQL,<br>
 disponibilizando notícias cadastradas no banco de dados, e um sistema de buscas.<br>
 Este projeto usa Node.JS como proprio servidor juntamente da framework Express e A middleware Multer, e, até o momento,<br>
