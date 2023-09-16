@@ -36,7 +36,7 @@
             <h1>Registrar uma notícia</h1>
 
             <form action="/regNews" method="post" enctype="multipart/form-data" name="regnews" id="regnews">
-                <input type="text" name="title" id="title" maxlength="28" required />
+                <input type="text" name="title" id="title" maxlength="23" required />
                 <label for="title" class="Title">Título</label>
                 <input type="text" name="subtitle" id="subtitle" required />
                 <label for="subtitle" class="subTitle">Sub Título</label>
@@ -53,5 +53,9 @@
 
     <!-- JS -->
     <script src="/dropMenus.js"></script>
+
+    <% if(msg !== "") {%>
+        <script>alert('<%= msg %>');</script>
+    <% }%>
 </body>
 </html>

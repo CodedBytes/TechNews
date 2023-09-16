@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TechNews - Editando notícia</title>
     <link rel="stylesheet" href="/index.css" />
+    <link rel="stylesheet" href="/cadastro-news.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
@@ -15,15 +16,6 @@
         </div>
 
         <div class="rightItems">
-            <div class="search">
-                <form action="/search" method="get" name="searchForm" id="searchForm">
-                    <input type="text" name="noticia" id="noticia" required />
-                    <label for="noticia">Pesquisar Notícia</label>
-                </form>
-    
-                <button type="submit" form="searchForm"><i class="fa fa-search fa-2x"></i></button>
-            </div>
-            
             <% if(result == 0) { %>
             <button onclick="loginMenu();" id="loginBtn"><i class="fa fa-lock" id="loginBtn"></i> LOGIN</button>
             <% } else { %>
@@ -43,7 +35,30 @@
         <% } %>
     </section>
 
+    <section class="cadPage">
+        <div class="form">
+            <h1>Editar Notícia</h1>
+
+            <form action="/updateNews" method="post" enctype="multipart/form-data" name="updatenews" id="updatenews">
+                <input type="text" name="title" id="title" maxlength="23" value="<%= news[0].Titulo %>" required />
+                <label for="title" class="Title">Título</label>
+                <input type="text" name="subtitle" id="subtitle" value="<%= news[0].subTitulo %>" required />
+                <label for="subtitle" class="subTitle">Sub Título</label>
+                <textarea name="content" id="content" cols="100" rows="12" placeholder="Seu texto aqui." required ><%= news[0].Texto %></textarea>
+                
+                <input type="file" name="image" id="file-input" accept="image/png, image/jpeg" >
+                <label for="file-input" id="file-label"></label><br>
+
+                <span>Campos com * são obrigatórios!</span>
+                <button type="submit"><i class="fa fa-flag-checkered"></i> Enviar</button>
+            </form>
+        </div>
+
     <!-- JS -->
     <script src="/dropMenus.js"></script>
+
+    <% if(msg !== "") {%>
+        <script>alert('<%= msg %>');</script>
+    <% }%>
 </body>
 </html>

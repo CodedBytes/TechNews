@@ -82,5 +82,9 @@
     <!-- JS -->
     <script src="/dropMenus.js"></script>
     <script src="/verificarSenhas.js"></script>
+
+    <% if(msg !== "") {%>
+        <script>alert('<%= msg %>');</script>
+    <% }%>
 </body>
 </html>

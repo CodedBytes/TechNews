@@ -6,6 +6,17 @@
     <title>TecNews - Inicio</title>
     <link rel="stylesheet" href="/index.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- SEO Search engine otimization -->
+    <meta name="description" content="Fique por dentro das notícias mais relevantes sobre o mundo tech!">
+
+    <!-- SMO Social media otimization-->
+    <meta property="og:title" content="TechNews">
+    <meta property="og:site_name" content="TechNews">
+    <meta property="og:description" content="Fique por dentro das notícias mais relevantes sobre o mundo tech!">
+    <meta property="og:url" content="https://www.technews.com.br">
+    <meta property="og:image" content="/social-banner.jpg">
+    <meta property="og:image:type" content="image/jpg">
 </head>
 <body>
     <!-- NavBar -->
@@ -72,19 +83,23 @@
             <% if(notices != 0){
                 for(item of news) { %>
 
-            <div class="content">
+            <div class="content"  id="<%= item.notice_ID %>">
                 <% if(item.Foto != "") { %>
                     <img src="<%= item.Foto %>" alt="" name="<%= item.Titulo %>" width="360px" height="300px"/>
                 <% } else { %>
                     <img src="/photos/no-image.jpg" alt="" name="<%= item.Titulo %>" width="360px" height="300px"/>
                 <% } %>
                 <div class="box">
+                    <% if(item.Autor === login) { %>
+                        <form action="/editNews" method="get"><button type="submit" class="edit" value="<%= item.notice_ID %>" name="newsid"><i class="fa fa-pencil"></i></button></form>
+                        <form action="/delNews" method="post"><button type="submit" class="delete" value="<%= item.notice_ID %>" name="btn"><i class="fa fa-trash-can"></i></button></form> 
+                    <% }%>
                     <h1><%= item.Titulo %></h1>
                     <h2><%= item.subTitulo %></h2>
                     <div class="parent">
                         <p><%= item.Texto %></p>
                     </div>
-                    <span class="date" id="date">Publicada por <%= item.Autor %>, dia <%= data %></span>
+                    <span class="date" id="date">Publicada por <%= item.Autor %>, em <%= data %></span>
                 </div>
             </div>
             <% } 
@@ -97,5 +112,9 @@
 
     <!-- JS -->
     <script src="/dropMenus.js"></script>
+
+    <% if(msg !== "") {%>
+        <script>alert('<%= msg %>');</script>
+    <% }%>
 </body>
 </html>
