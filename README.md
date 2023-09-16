@@ -5,7 +5,7 @@
   
 </div>
 
-##
+## Apresentação
 
 Projeto idependente, front-end e brack-end, criando um sistema de criação e catalogação de noticias.<br>
 Projeto tem fins de mostrar meu conhecimento em front-end e back-end, como tambem em manipulação em bancos de dados MySQL,<br>
@@ -21,12 +21,10 @@ esta totalmente otimizado para dispositivos mobile de todas as classes.
 - Servidor em Node.js com framework Express.JS.
 - Sistema de pesquisa por notícias.
 - Sistema para deletar notícia feita pelo próprio usuario logado.
+- Sistema para editar notícia feita pelo próprio usuario logado.
 - Sistema de hierarquía no login (Usuario, ADM, Mod, etc...). [INICIADO!]
 
-##
-
-TODO List:
-- Sistema para editar notícia feita pelo próprio usuario logado.
+## TODO List
 - Pagina para mostrar notícia completa, com possiveis espaços para ADS.
 
 ## Instalação
@@ -41,22 +39,19 @@ Windows (Domestico):
 - Na pasta extraida segure SHIFT + clique esquerdo do mouse e abra com o powershell.
 - Execute o comando : 'node app.js' e o app estará rodando em seu pc.
 
-##
- 
-As linguagens usadas foram : <br><br>
+## Linguagens usadas
+
   ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
   ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
   ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
   
-  ##
+  ## Frameworks e Libraries usadas 
 
-Frameworks e Libraries usadas :<br><br>
  ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
  ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
    
-  ##
+  ## Demonstração do webapp
 
-Demonstração do webapp :<br><br>
 <img src="/demonstrations/demo1.png" width="270px">
 <img src="/demonstrations/demo2.png" width="270px">
 <img src="/demonstrations/demo3.png" width="270px">
@@ -65,7 +60,5 @@ Demonstração do webapp :<br><br>
 <img src="/demonstrations/mobile2.png" width="100px">
 <img src="/demonstrations/mobile3.png" width="100px">
 
-  ##
-  
-Fale comigo ;D<br>
+  ## Fale comigo ;D
 ![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white) DJ.Next#1649
