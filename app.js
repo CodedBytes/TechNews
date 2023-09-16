@@ -97,19 +97,15 @@ app.get("/register",(req, res)=>{
     else if(req.session.loggedin) { res.redirect("/"); }
 });
 
-// Create news page
+// Pagina ed registro de noticias
 app.get("/create-news",(req, res)=>{
     if(!req.session.loggedin) { res.redirect("/"); }
-    else if(req.session.loggedin) { res.render(path.join(__dirname + '/public/pointers/cadNews.ejs'),{result: 1, login: req.session.login}); }
+    else if(req.session.loggedin) { res.render(path.join(__dirname + '/public/pointers/news/cadNews.ejs'),{result: 1, login: req.session.login}); }
 });
 
-// Funcionario logout
+// Logout
 app.get("/logout",(req, res)=>{
-    if(req.session.loggedin)
-    {
-        req.session.destroy();
-        res.redirect("/");
-    } else { res.redirect("/") }
+    if(req.session.loggedin) { req.session.destroy(); res.redirect("/"); } else { res.redirect("/") }
 });
 /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -135,6 +131,7 @@ app.post("/doLogin",(req, res)=>{
                 {
                     req.session.loggedin = true;
                     req.session.login = results[0].Usuario;
+                    req.session.userID = results[0].user_ID;
                     res.redirect("/");
                 } else {
                     // ativar div de msg
@@ -166,7 +163,7 @@ app.post("/regUser",(req, res)=>{
                     if(error) throw error;
 
                     // Query
-                    conn.query("INSERT INTO usuarios (Usuario, Senha) VALUES (?, ?);",[login, hash],(error,results)=>{
+                    conn.query("INSERT INTO usuarios (Usuario, Senha, Data) VALUES (?, ?, now());",[login, hash],(error,results)=>{
                         if(error) throw error;
                         if(results.affectedRows > 0) { res.redirect("/"); }
                         else { res.redirect("/"); }
@@ -194,7 +191,7 @@ app.post("/regNews", upload.single('image'),(req, res)=>{
                 res.redirect("/create-news");
             } else {
                 // Prossegue no cadastro da notícia.
-                conn.query("INSERT INTO noticias (Autor, Titulo, subTitulo, Texto, Data_Criacao) VALUES (?, ?, ?, ?, CURDATE());",[req.session.login, title, subTitle, content],(error,results)=>{
+                conn.query("INSERT INTO noticias (user_ID, Autor, Titulo, subTitulo, Texto, Data_Criacao) VALUES (?, ?, ?, ?, ?, CURDATE());",[req.session.userID, req.session.login, title, subTitle, content],(error,results)=>{
                     if(error) throw error;
                     if(results.affectedRows > 0)
                     {
@@ -255,6 +252,38 @@ app.get("/search", (req, res)=>{
             }
         } else { res.render(path.join(__dirname + '/public/pointers/index.ejs'),{result: 1, login: req.session.login, news: results, notices: 0}); }
     });
+});
+
+// Editar notícia
+app.get("/editNews",(req, res)=>{
+    // Pega o ID da notícia se tiver logado
+    if(req.session.loggedin) {
+        var id = req.query.newsid
+        console.log(id);
+
+        // Query do processo.
+        conn.query("SELECT * FROM noticias WHERE notice_ID = ? and Autor = ?",[id, req.session.login],(error,results)=>{
+            if(error) throw error;// Joga erro na tela.
+            if(results.length > 0){ res.render(path.join(__dirname + '/public/pointers/news/editNews.ejs'),{result: 1, login: req.session.login});  } 
+            else { res.redirect("/"); }
+        });
+    } else { res.redirect("/"); }
+});
+
+// Deletando post
+app.post("/delNews",(req, res)=>{
+    
+    // Pega o ID da notícia se tiver logado
+    if(req.session.loggedin) {
+        var id = req.body.btn
+        console.log(id);
+
+        // Query do processo.
+        conn.query("DELETE FROM noticias WHERE notice_ID = ?",[id],(error,results)=>{
+            if(error) throw error;// Joga erro na tela.
+            if(results.affectedRows > 0){ res.redirect("/"); } else { res.redirect("/"); }
+        });
+    } else { res.redirect("/"); }
 });
 /////////////////////////////////////////////////////////////////////////////////////////////
 
