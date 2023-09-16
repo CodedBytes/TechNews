@@ -16,7 +16,6 @@ esta totalmente otimizado para dispositivos mobile de todas as classes.
 
 ##
 
-Projeto contem :
 - Sistema de login usando a middleware bcrypt.
 - Sistema de cadastro usando middleware bcrypt.
 - Servidor em Node.js com framework Express.JS.
@@ -29,6 +28,18 @@ Projeto contem :
 TODO List:
 - Sistema para editar notícia feita pelo próprio usuario logado.
 - Pagina para mostrar notícia completa, com possiveis espaços para ADS.
+
+## Instalação
+
+Windows (Domestico):
+- É necessario ter instalado o [NodeJS](https://nodejs.org/en) em sua maquina.
+- É necessaria a instalação de um servidor MySQL, você pode usar o xampp ou o EasyPHP para esse trabalho.
+- É necessario ter o [MySQL Workbench](https://dev.mysql.com/downloads/workbench/) instalado, ou acesse usando o painel que já vem com o Xampp / EasyPHP
+- Extraia em alguma pasta de sua preferencia.
+- Ligue seu servidor MySQL e importe o arquivo Database.sql, ele ira criar o banco de dados.
+- o banco de dados ja vem configurado com o nome da db que sera gerada do .sql junto do usuario e senha padrão.
+- Na pasta extraida segure SHIFT + clique esquerdo do mouse e abra com o powershell.
+- Execute o comando : 'node app.js' e o app estará rodando em seu pc.
 
 ##
  
@@ -57,4 +68,4 @@ Demonstração do webapp :<br><br>
   ##
   
 Fale comigo ;D<br>
-![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white) <br> DJ.Next#1649
+![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white) DJ.Next#1649
