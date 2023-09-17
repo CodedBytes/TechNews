@@ -22,6 +22,8 @@ esta totalmente otimizado para dispositivos mobile de todas as classes.
 - Sistema de pesquisa por notícias.
 - Sistema para deletar notícia feita pelo próprio usuario logado.
 - Sistema para editar notícia feita pelo próprio usuario logado.
+- Sistema demonstra erro ao usuario final, caso aconteça algum.
+- Pagina 404 para requests inexistentes.
 - Sistema de hierarquía no login (Usuario, ADM, Mod, etc...). [INICIADO!]
 
 ## TODO List
