@@ -1,0 +1,78 @@
+:root{
+    --page-background-color: rgb(230, 230, 230);/* BG color var*/
+    --search-btn-color: rgb(244, 38, 38);
+    --search-btn-hover-color: rgb(252, 75, 75);
+    --btn-char-color: white;
+    --default-font: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;/* Page default font */
+}
+body > h1{
+    margin-left: 40px;
+    margin-top: 15px;
+    font-size: 55px;
+}
+
+section.main{
+    position: absolute;
+    display: flex;
+    width: 70%;
+    height: 400px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+section.main > .left{
+    margin-right: 70px;
+}
+
+section.main > .right > .info > h1{
+    margin-bottom: 5px;
+    font-size: 45px;
+}
+
+section.main > .right > .info > p{
+    font-size: 23px;
+    width: 300px;
+}
+
+section.main > .right > .info > button{
+    padding: 15px 30px;
+    border: 0px;
+    border-radius: 5px;
+    background-color: var(--search-btn-color);
+    color: var(--btn-char-color);
+    font-size: 17px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+section.main > .right > .info > button > span{
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.2s;
+}
+section.main > .right > .info > button > span::before{
+    content: '\003C';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    left: -20px;
+    transition: 0.2s;
+}
+
+section.main > .right > .info > button:hover{
+    padding-left: 40px;
+    padding-right: 20px;
+    background-color: var(--search-btn-hover-color);
+}
+
+section.main > .right > .info > button:hover span::before{
+    opacity: 1;
+    transition: 0.2s;
+}

@@ -246,9 +246,57 @@ section.page > .grid > .content > .box{
     box-shadow: rgba(0, 0, 0, 0.24) 0px 8px 24px;
     background-color:  var(--navbar-char-color);
 }
-section.page > .grid > .content > .box > h1{
+
+section.page > .grid > .content > .box > form .delete{
+    padding: 5px 9px;
+    border: 0px;
+    cursor:  pointer;
+    border-radius: 5px;
+    position: absolute;
+    font-size: 16px;
+    margin-top: -11px;
+    margin-left: 292px;
+    background-color: var(--search-btn-color);
+    color: var(--navbar-char-color);
+}
+section.page > .grid > .content > .box > form .delete:hover{
+    background-color: var(--search-btn-hover-color);
+}
+section.page > .grid > .content > .box > form .delete:active{
+    background-color: var(--search-btn-active-color);
+}
+
+section.page > .grid > .content > .box > form .edit{
+    padding: 5px 9px;
+    border: 0px;
+    cursor:  pointer;
+    border-radius: 5px;
+    position: absolute;
+    font-size: 16px;
+    margin-top: -11px;
+    margin-left: -5px;
+    background-color: var(--search-btn-color);
+    color: var(--navbar-char-color);
+}
+section.page > .grid > .content > .box > form .edit:hover{
+    background-color: var(--search-btn-hover-color);
+}
+section.page > .grid > .content > .box > form .edit:active{
+    background-color: var(--search-btn-active-color);
+}
+
+section.page > .grid > .content > .box > a{
+    text-decoration: none;
+}
+section.page > .grid > .content > .box > a:hover{
+    text-decoration: underline;
+    color: rgb(238, 8, 8);
+}
+
+section.page > .grid > .content > .box > a > h1{
     font-size: 28px;
     text-align: center;
+    color: black;
 }
 section.page > .grid > .content > .box > h2{
     font-size: 18px;

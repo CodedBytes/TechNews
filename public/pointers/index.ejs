@@ -6,6 +6,7 @@
     <title>TecNews - Inicio</title>
     <link rel="stylesheet" href="/index.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.6.js"></script>
 
     <!-- SEO Search engine otimization -->
     <meta name="description" content="Fique por dentro das notícias mais relevantes sobre o mundo tech!">
@@ -81,8 +82,9 @@
 
         <div class="grid">
             <% if(notices != 0){
-                for(item of news) { %>
-
+                for(item of news) { 
+                    var datee = item.Data_Criacao.split('-').reverse().join('/');
+                %>    
             <div class="content"  id="<%= item.notice_ID %>">
                 <% if(item.Foto != "") { %>
                     <img src="<%= item.Foto %>" alt="" name="<%= item.Titulo %>" width="360px" height="300px"/>
@@ -94,12 +96,12 @@
                         <form action="/editNews" method="get"><button type="submit" class="edit" value="<%= item.notice_ID %>" name="newsid"><i class="fa fa-pencil"></i></button></form>
                         <form action="/delNews" method="post"><button type="submit" class="delete" value="<%= item.notice_ID %>" name="btn"><i class="fa fa-trash-can"></i></button></form> 
                     <% }%>
-                    <h1><%= item.Titulo %></h1>
+                    <a href="/notice?id=<%= item.notice_ID %>&name=<%= item.Titulo %>"><h1><%= item.Titulo %></h1></a>
                     <h2><%= item.subTitulo %></h2>
                     <div class="parent">
-                        <p><%= item.Texto %></p>
+                        <p id="outputt" style="white-space: pre-line"><%= item.Texto %></p>
                     </div>
-                    <span class="date" id="date">Publicada por <%= item.Autor %>, em <%= data %></span>
+                    <span class="date" id="date">Publicada por <%= item.Autor %>, em <%= datee %></span>
                 </div>
             </div>
             <% } 

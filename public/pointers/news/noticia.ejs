@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechNews</title>
+    <link rel="stylesheet" href="/index.css">
+    <link rel="stylesheet" href="/noticia.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <!-- NavBar -->
+    <section class="header">
+        <div class="links">
+            <a href="/">Home</a>
+        </div>
+
+        <div class="rightItems">
+            <% if(result == 0) { %>
+            <button onclick="loginMenu();" id="loginBtn"><i class="fa fa-lock" id="loginBtn"></i> LOGIN</button>
+            <% } else { %>
+            <button onclick="PerfilMenu();" id="perfilBtn"><i class="fa fa-lock" id="perfilBtn"></i> PERFIL</button>
+            <% } %>
+        </div>
+
+        <!-- Perfil window -->
+        <% if(result == 1) { %>
+            <div id="perfil-wind" class="perfil-info arrow-up" id="inside">
+                <span>Olá <%= login %></span>
+                <hr>
+                <a href="/create-news">Nova Notícia</a>
+                <hr>
+                <button onclick="window.location.href='/logout'" class="register" id="inside"><i class="fa fa-door-open" id="inside"></i> Sair</button>
+            </div>
+        <% } %>
+
+        <!-- Login window -->
+        <div id="login-wind" class="dd-content arrow-up" id="inside">
+            <h1 id="inside">Login</h1>
+
+            <form action="/doLogin" method="post" name="loginForm" id="loginForm">
+                <input type="text" name="login" id="login" required/>
+                <label for="login" class="login" id="inside">Usuário</label>
+                <input type="password" name="senha" id="senha" required/>
+                <label for="senha" class="senha" id="inside">Senha</label>
+            </form>
+            
+            <button type="submit" form="loginForm" id="inside"><i class="fa fa-unlock" id="inside"></i> Entrar</button>
+            <button onclick="window.location.href='/register'" class="register" id="inside"><i class="fa fa-newspaper" id="inside"></i> Cadastrar-se</button>
+        </div>
+    </section>
+
+    <section class="news">
+        <div class="window">
+            <h1><%= noticia[0].Titulo %></h1>
+            <h2><%= noticia[0].subTitulo %></h2>
+
+            <div class="content" >
+                <p style="white-space: pre-line"><%= noticia[0].Texto %></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- JS -->
+    <script src="/dropMenus.js"></script>
+
+    <% if(msg !== "") {%>
+        <script>alert('<%= msg %>');</script>
+    <% }%>
+</body>
+</html>
