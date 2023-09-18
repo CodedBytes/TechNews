@@ -24,10 +24,10 @@ esta totalmente otimizado para dispositivos mobile de todas as classes.
 - Sistema para editar notícia feita pelo próprio usuario logado.
 - Sistema demonstra erro ao usuario final, caso aconteça algum.
 - Pagina 404 para requests inexistentes.
-- Sistema de hierarquía no login (Usuario, ADM, Mod, etc...). [INICIADO!]
+- Pagina para mostrar notícia completa, com possiveis espaços para ADS.
 
 ## TODO List
-- Pagina para mostrar notícia completa, com possiveis espaços para ADS.
+- Sistema de hierarquía no login (Usuario, ADM, Mod, etc...). [INICIADO!]
 
 ## Instalação
 
