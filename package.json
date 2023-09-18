@@ -7,6 +7,7 @@
     "express-session": "^1.17.3",
     "multer": "^1.4.5-lts.1",
     "mysql": "^2.18.1",
+    "nl2br": "^0.0.3",
     "path": "^0.12.7"
   }
 }

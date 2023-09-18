@@ -40,6 +40,7 @@ app.use(session({
     saveUninitialized: true,
 }));
 
+
 // Multer para salvar fotos / arquivos.
 var storage = multer.diskStorage({
     destination: (req, file, callBack) => {
@@ -69,8 +70,8 @@ app.get("/",(req, res)=>{
             if(error) throw error;
             if(results.length > 0)
             {
-                let data_brasileira = results[0].Data_Criacao.split('-').reverse().join('/');
-                res.render(path.join(__dirname + '/public/pointers/index.ejs'),{result: 0, login: req.session.login, news: results, notices: 1, data: data_brasileira, msg: erro});
+                console.log(results)
+                res.render(path.join(__dirname + '/public/pointers/index.ejs'),{result: 0, login: req.session.login, news: results, notices: 1, msg: erro});
                 erro = "";// Mensagem de erro.
             } else {
                 res.render(path.join(__dirname + '/public/pointers/index.ejs'),{result: 0, login: req.session.login, news: results, notices: 0, msg: erro});
@@ -85,8 +86,7 @@ app.get("/",(req, res)=>{
             if(error) throw error;
             if(results.length > 0)
             {
-                let data_brasileira = results[0].Data_Criacao.split('-').reverse().join('/');
-                res.render(path.join(__dirname + '/public/pointers/index.ejs'),{result: 1,login: req.session.login, news: results, notices: 1, data: data_brasileira,  msg: erro});
+                res.render(path.join(__dirname + '/public/pointers/index.ejs'),{result: 1,login: req.session.login, news: results, notices: 1,  msg: erro});
                 erro = "";// Mensagem de erro.
             } else {
                 res.render(path.join(__dirname + '/public/pointers/index.ejs'),{result: 1, login: req.session.login, news: results, notices: 0, msg: erro});
@@ -102,7 +102,7 @@ app.get("/register",(req, res)=>{
     else if(req.session.loggedin) { res.redirect("/"); }
 });
 
-// Pagina ed registro de noticias
+// Pagina de registro de noticias
 app.get("/create-news",(req, res)=>{
     if(!req.session.loggedin) { res.redirect("/"); }
     else if(req.session.loggedin) { res.render(path.join(__dirname + '/public/pointers/news/cadNews.ejs'),{result: 1, login: req.session.login, msg: erro}); }
@@ -112,6 +112,8 @@ app.get("/create-news",(req, res)=>{
 app.get("/logout",(req, res)=>{
     if(req.session.loggedin) { req.session.destroy(); res.redirect("/"); } else { res.redirect("/") }
 });
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -248,16 +250,16 @@ app.get("/search", (req, res)=>{
             if(!req.session.loggedin)
             {
                 let data_brasileira = results[0].Data_Criacao.split('-').reverse().join('/');
-                res.render(path.join(__dirname + '/public/pointers/index.ejs'),{result: 0, login: req.session.login, news: results, notices: 1, data: data_brasileira});
+                res.render(path.join(__dirname + '/public/pointers/index.ejs'),{result: 0, login: req.session.login, news: results, notices: 1, msg: erro});
                 erro = "";// limpa os erros.
             }
             else if(req.session.loggedin)
             {
                 let data_brasileira = results[0].Data_Criacao.split('-').reverse().join('/');
-                res.render(path.join(__dirname + '/public/pointers/index.ejs'),{result: 0, login: req.session.login, news: results, notices: 1, data: data_brasileira});
+                res.render(path.join(__dirname + '/public/pointers/index.ejs'),{result: 0, login: req.session.login, news: results, notices: 1, msg: erro});
                 erro = "";// limpa os erros.
             }
-        } else { res.render(path.join(__dirname + '/public/pointers/index.ejs'),{result: 1, login: req.session.login, news: results, notices: 0}); erro = "";}
+        } else { res.render(path.join(__dirname + '/public/pointers/index.ejs'),{result: 1, login: req.session.login, news: results, notices: 0,  msg: erro}); erro = "";}
     });
 });
 
@@ -327,12 +329,30 @@ app.post("/updateNews", upload.single('image'),(req, res)=>{
     }
 });
 
+// Função de pesquisa.
+app.get("/notice", (req, res)=>{
+    let id = req.query.id;
+    let name = req.query.name;
+
+    conn.query("SELECT * FROM noticias WHERE notice_ID = ? AND Titulo = ?;",[id, name],(error, results)=>{
+        if(error) throw error;
+        if(results.length > 0)
+        {
+            res.render(path.join(__dirname + '/public/pointers/news/noticia.ejs'),{result: 0, login: req.session.login, noticia: results, msg: erro});
+        } else {
+            erro = "Esta notícia não existe!";
+            res.redirect("/");
+        }
+    });
+    
+});
+
 // Deletando post
 app.post("/delNews",(req, res)=>{
     
     // Pega o ID da notícia se tiver logado
     if(req.session.loggedin) {
-        var id = req.body.btn
+        var id = req.body.btn;
         console.log(id);
 
         // Query do processo.
@@ -345,8 +365,14 @@ app.post("/delNews",(req, res)=>{
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 
+/////////////////////////////////////////   404 Page   /////////////////////////////////////
+app.use((req, res, next)=>{
+    res.render(path.join(__dirname + '/public/pointers/404.ejs'));
+});
+////////////////////////////////////////////////////////////////////////////////////////////
 
-/////////////////////////////////     seta a porta do app    ////////////////////////////////
+
+/////////////////////////////////     Iniciando app    /////////////////////////////////////
 app.listen(port, ()=>{
     console.log('Servidor iniciado na porta : %d', port);
     if (process.send) { process.send('online'); }
