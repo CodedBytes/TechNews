@@ -31,6 +31,7 @@ app.use(express.static(path.join(__dirname, '/public/js')));
 app.use(express.static(path.join(__dirname, '/public/imgs')));
 app.use(express.static(path.join(__dirname, '/public/_files')));
 app.use(express.static(path.join(__dirname, '/public/pointers')));
+app.use(express.static(path.join(__dirname, '/public/ckeditor')));
 
 // Sessão
 app.use(session({

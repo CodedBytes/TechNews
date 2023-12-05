@@ -99,7 +99,7 @@
                     <a href="/notice?id=<%= item.notice_ID %>&name=<%= item.Titulo %>"><h1><%= item.Titulo %></h1></a>
                     <h2><%= item.subTitulo %></h2>
                     <div class="parent">
-                        <p id="outputt" style="white-space: pre-line"><%= item.Texto %></p>
+                        <p id="outputt" style="white-space: pre-line"><%- item.Texto %></p>
                     </div>
                     <span class="date" id="date">Publicada por <%= item.Autor %>, em <%= datee %></span>
                 </div>

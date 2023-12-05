@@ -11,6 +11,7 @@ const conn = mysql.createConnection({
     user: "root",
     password: "", 
     database: "news",
+    charset : 'utf8mb4',// adicionado charset por conta dos emojis.
     multipleStatements: true
 });
 
